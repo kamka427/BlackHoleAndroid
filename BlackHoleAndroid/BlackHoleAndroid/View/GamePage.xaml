@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             x:Class="BlackHoleAndroid.View.GamePage"
+             Title="Játék">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <!-- stílusok a vezérlőknek -->
+            <Style x:Key="MainLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+
+            <Style x:Key="ColoredLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="Margin" Value="3" />
+                <Style.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding ActualPlayer}" Value="Piros">
+                        <Setter Property="TextColor" Value="Red"></Setter>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Label" Binding="{Binding ActualPlayer}" Value="Kék">
+                        <Setter Property="TextColor" Value="Blue"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+      </Style>
+      <Style x:Key="MainButtonStyle" TargetType="Button">
+        <Setter Property="FontSize" Value="Micro" />
+        <Setter Property="BackgroundColor" Value="DimGray" />
+        <Setter Property="BorderRadius" Value="0" />
+        <Setter Property="BorderWidth" Value="0" />
+                <Setter Property="BorderColor" Value="DimGray" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="HeightRequest" Value="30" />
+      </Style>
+      <Style x:Key="FieldStyle" TargetType="Button">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderRadius" Value="50" />
+
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="BorderColor" Value="Black" />
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Style.Triggers>
+          <!-- a színt a mező zárolása állítja be -->
+
+                   
+                    <DataTrigger TargetType="Button" Binding="{Binding Text}" Value="2">
+            <Setter Property="BackgroundColor" Value="Blue" />
+
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding Text}" Value="1">
+                        <Setter Property="BackgroundColor" Value="Red" />
+
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding Text}" Value="-1">
+            <Setter Property="BackgroundColor" Value="Black" />
+
+                    </DataTrigger>
+                    
+                    <DataTrigger TargetType="Button" Binding="{Binding Text}" Value="balra">
+                        <Setter Property="BackgroundColor" Value="Gray" />
+
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding Text}" Value="jobbra">
+                        <Setter Property="BackgroundColor" Value="Gray" />
+
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding Text}" Value="fel">
+                        <Setter Property="BackgroundColor" Value="Gray" />
+
+                        
+                    </DataTrigger>
+
+                    <DataTrigger TargetType="Button" Binding="{Binding Text}" Value="le">
+                        <Setter Property="BackgroundColor" Value="Gray" />
+
+
+                    </DataTrigger>
+
+                    <DataTrigger TargetType="Button" Binding="{Binding Text}" Value="">
+                        <Setter Property="BackgroundColor" Value="White" />
+
+                    </DataTrigger>
+
+
+                    <DataTrigger TargetType="Button" Binding="{Binding OnBlackHole}" Value="True">
+                        <Setter Property="BorderWidth" Value="10" />
+
+                    </DataTrigger>
+                </Style.Triggers>
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+
+
+        </Grid.RowDefinitions>
+     
+        
+        
+        
+        
+      <!-- a gombokat a képernyő tetejére helyezzük -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="2">
+            <Button Text="Új játék" Command="{Binding NewGameCommand}" Style="{StaticResource MainButtonStyle}"/>
+            <Button Text="Beállítások" Command="{Binding ExitCommand}" Style="{StaticResource MainButtonStyle}" />
+            
+        </StackLayout>
+
+
+        <!-- az információkat alul írjuk ki -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Grid.Row="0" Margin="10">
+            <Label Text="Aktuális:" Style="{StaticResource MainLabelStyle}" />
+            <Label Text="{Binding ActualPlayer}" Style="{StaticResource ColoredLabelStyle}" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="0" Margin="10">
+            <Label Text="Piros:" Style="{StaticResource MainLabelStyle}" />
+            <Label Text="{Binding P1Left}" Style="{StaticResource MainLabelStyle}" />
+            <Label Text="Kék:" Style="{StaticResource MainLabelStyle}" />
+            <Label Text="{Binding P2Left}" Style="{StaticResource MainLabelStyle}" />
+        </StackLayout>
+        
+        
+        <controls:FlowListView Grid.Row="1" FlowColumnCount="{Binding MapSizeView}" FlowItemsSource="{Binding Fields}" SeparatorVisibility="None" RowHeight="50" >
+        <!-- a játéktáblát egy sorfolytos listával valósítjuk meg -->
+        <controls:FlowListView.FlowColumnTemplate >
+          <DataTemplate>
+            <!-- a rács elemei gombok lesznek -->
+            <Button Command="{Binding MoveCommand}" CommandParameter="{Binding Number}"  Style="{StaticResource FieldStyle}" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="30" WidthRequest="30" />
+          </DataTemplate>
+        </controls:FlowListView.FlowColumnTemplate>
+      </controls:FlowListView>
+
+      
+
+    </Grid>
+
+</ContentPage>

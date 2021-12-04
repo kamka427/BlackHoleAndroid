@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlackHoleAndroid.View.SettingsPage"
+             Title="Beállítások">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <!-- stílusok a vezérlőknek -->
+      <Style x:Key="MainLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="Margin" Value="1" />
+      </Style>
+      <Style x:Key="MainButtonStyle" TargetType="Button">
+        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="BackgroundColor" Value="Blue" />
+        <Setter Property="BorderRadius" Value="2" />
+        <Setter Property="BorderColor" Value="Blue" />
+        <Setter Property="Margin" Value="5" />
+      </Style>
+     
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+    <!-- a nehézséget kapcsolók segítségével állítjuk -->
+    <StackLayout Orientation="Vertical">
+        <Button Command="{Binding SaveGameCommand}" Text="Mentés" Style="{StaticResource MainButtonStyle}" />
+        <Button Command="{Binding LoadGameCommand}" Text="Betöltés" Style="{StaticResource MainButtonStyle}" />
+       
+        
+
+        <Label Text="A következő játék méretének kiválasztása:" Style="{StaticResource MainLabelStyle}" HorizontalOptions="Center" />
+        <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="size" RadioButtonGroup.SelectedValue="{Binding Selection}"  HorizontalOptions="Center">
+            <RadioButton IsChecked="{Binding Selection}" Content="Small" Value="Small" GroupName="size" />
+            <RadioButton IsChecked="{Binding Selection}" Content="Medium" Value="Medium" GroupName="size"/>
+            <RadioButton IsChecked="{Binding Selection}" Content="Big" Value="Big" GroupName="size" />
+            
+
+        </StackLayout>
+        <Button Text="Új játék az új pályamérettel" Command="{Binding NewGameCommand}" Style="{StaticResource MainButtonStyle}"/>
+    </StackLayout>
+</ContentPage>
